@@ -1,5 +1,6 @@
 # Macbook Pro - Linuxmint 19.3
-- My Linuxmint 19.3 configuration to Macbook Pro 2009 intel i5 2.3Ghz
+
+My Linuxmint 19.3 configuration to Macbook Pro 2009 intel i5 2.3Ghz
 
 # Check switcheroo
 
@@ -28,20 +29,21 @@ chmod 755 /etc/grub.d/01_enable_vga.conf
 
 - Install nvidia driver by driver manager Linuxmint|Ubuntu
 - Don't change any configuration in Nvidia-settings. It might increase your CPU usage by cynnamon. I don't know why by the way.
+- Sometimes cynnamon crashs losing the screen configuation to fix it you need to configure xorg.conf only with nvidia graphics card.
 
 # Change fn key behavior - F1 to F12
 
-- Enable before apply to hid_apple.conf file
+- Enable before apply to hid_apple.conf file:
 
 echo 2 | sudo tee /sys/module/hid_apple/parameters/fnmode
 echo 2 | sudo tee /sys/module/hid_apple/parameters/swap_opt_cmd
 
-- Put in the file hid_apple.conf in /etc/modprobe.d
+- Put in the file hid_apple.conf in /etc/modprobe.d:
 
 echo options hid_apple fnmode=2 | sudo tee /etc/modprobe.d/hid_apple.conf 
 echo options hid_apple swap_opt_cmd=2 | sudo tee >> /etc/modprobe.d/hid_apple.conf
 
-# Swaping ejectcd to delete key and rigth fn to right ctrl
+# Swaping ejectcd to delete key and right fn to right ctrl
 
 - clone repository https://github.com/free5lot/hid-apple-patched and follow
   - In the repository folder type make and wait for compiling.
@@ -50,17 +52,17 @@ echo options hid_apple swap_opt_cmd=2 | sudo tee >> /etc/modprobe.d/hid_apple.co
 sudo mv /lib/modules/5.4.55-linux-image-06082020/kernel/drivers/hid/hid_apple.ko /lib/modules/5.4.55-linux-image-06082020/kernel/drivers/hid/hid_apple.ko.old
 cp hid_apple.ko /lib/modules/5.4.55-linux-image-06082020/kernel/drivers/hid/
 
-  - Enable before apply to hid_apple.conf file
+  - Enable before apply to hid_apple.conf file:
 
 echo 1 | sudo tee /sys/module/hid_apple/parameters/swap_fn_leftctrl
 echo 1 | sudo tee /sys/module/hid_apple/parameters/ejectcd_as_delete
 
-  - Add to your /etc/modprobe.d/hid_apple.conf
+  - Add to your /etc/modprobe.d/hid_apple.conf:
 
 options hid_apple swap_fn_leftctrl=1
 options hid_apple ejectcd_as_delete=1
 
-  - Applying changes after test
+  - Applying changes after test:
 
 echo options hid_apple swap_fn_leftctrl=1 | sudo tee /etc/modprobe.d/hid_apple.conf 
 echo options hid_apple ejectcd_as_delete=1 | sudo tee >> /etc/modprobe.d/hid_apple.conf
